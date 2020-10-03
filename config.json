@@ -1,0 +1,41 @@
+{
+    "token": "",
+    "guildid" : "750532531086164018",
+    "channelid" : "750987451983593513",
+    "offset" : {
+        "add":true, 
+        "hour": 5, 
+        "minutes": 30
+    },
+    "checktime" : 5000,
+    "time" : [
+        {
+            "name" : "sunrise",
+            "time" : {
+                "hour": "10", 
+                "minute" : "00"
+            }
+        },
+        {
+            "name" : "morning",
+            "time" : {
+                "hour": "10", 
+                "minute" : "10"
+            }
+        },
+        {
+            "name" : "sunset",
+            "time" : {
+                "hour": "10", 
+                "minute" : "15"
+            }
+        },
+        {
+            "name" : "night",
+            "time" : {
+                "hour": "10", 
+                "minute" : "20"
+            }
+        }
+    ]
+}
