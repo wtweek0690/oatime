@@ -1,13 +1,11 @@
-{
-  "name": "time",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "",
-  "dependencies": {
-    "discord.js": "^12.3.1"
-  }
+  {
+    "name": "oa-time",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "main": "index.js",
+    "dependencies": {
+        "discord.js": "^12.3.1"
+    }
+}
