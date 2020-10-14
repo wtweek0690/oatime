@@ -5,34 +5,52 @@ const client = new Discord.Client();
 client.once('ready', () => {
     console.log('Ready!');
     
-    time_channel_check(config.guildid, config.channelid, config.time, config.offset, config.checktime)
+    time_channel_check(config.guildid, config.channelid, config.time, config.checktime)
 });
 
-function time_channel_check(guildid, channelid, json, offset, wait_time){ // string, string, array, time in millisecond 
+client.on("message", (message)=>{
+    if(message.content == "$time")
+    {
+        var current_time = calcTime(config.offset)
+        
+        return message.channel.send(`Current time in GMT${_sign()}${config.offset.hour}:${config.offset.minutes} is ${current_time.getUTCHours()}:${current_time.getUTCMinutes()}`)
+    }
+})
+
+function _sign(){
+    if(config.offset.add)
+        return "+"
+    else
+        return "-"
+}
+
+function time_channel_check(guildid, channelid, json, wait_time){ // string, string, array, time in millisecond 
     const guild = client.guilds.cache.get(guildid)
     const channel = guild.channels.cache.get(channelid)
     
     var channelname = channel.name;
 
-    var sunrise_time = calcTime(offset)
-    sunrise_time.setHours(json[0].time.hour, json[0].time.minute, 0)
+    var current_time = new Date().getTime()
 
-    var morning_time = calcTime(offset)
-    morning_time.setHours(json[1].time.hour, json[1].time.minute, 1)
+    var sunrise_time = new Date()
+    sunrise_time.setHours(parseInt(json[0].time.hour), parseInt(json[0].time.minute))
 
-    var sunset_time = calcTime(offset)
-    sunset_time.setHours(json[2].time.hour, json[2].time.minute, 2)
+    var morning_time = new Date()
+    morning_time.setHours(parseInt(json[1].time.hour), parseInt(json[1].time.minute))
+
+    var sunset_time = new Date()
+    sunset_time.setHours(parseInt(json[2].time.hour), parseInt(json[2].time.minute))
     
-    var night_time = calcTime(offset)
-    night_time.setHours(json[3].time.hour, json[3].time.minute, 3)
+    var night_time = new Date()
+    night_time.setHours(parseInt(json[3].time.hour), parseInt(json[3].time.minute))
 
-    if(night_time.getTime() - Date.now() < 0){
+    if(night_time.getTime() - current_time < 0){
         channelname = json[3].name
-    }else if(sunset_time.getTime() - Date.now() < 0){
+    }else if(sunset_time.getTime() - current_time < 0){
         channelname = json[2].name
-    }else if(morning_time.getTime() - Date.now() < 0){
+    }else if(morning_time.getTime() - current_time < 0){
         channelname = json[1].name
-    }else if(sunrise_time.getTime() - Date.now() < 0){
+    }else if(sunrise_time.getTime() - current_time < 0){
         channelname = json[0].name
     }
 
@@ -44,23 +62,10 @@ function time_channel_check(guildid, channelid, json, offset, wait_time){ // str
             console.log(err)
         })
     }
-
     setTimeout(function() {
-        time_channel_check(guildid, channelid, json, offset, wait_time)
+        time_channel_check(guildid, channelid, json, wait_time)
     }, wait_time)
 
 } 
-
-function calcTime(offset) {
-    var to_return = new Date();
-    if(offset.add == true){
-        to_return.setHours(to_return.getHours() + offset.hour)
-        to_return.setMinutes(to_return.getMinutes() + offset.minutes)
-    }else{
-        to_return.setHours(to_return.getHours() - offset.hour)
-        to_return.setMinutes(to_return.getMinutes() - offset.minutes)
-    }
-    return to_return
-}
 
 client.login(config.token);
