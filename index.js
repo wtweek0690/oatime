@@ -11,9 +11,9 @@ client.once('ready', () => {
 client.on("message", (message)=>{
     if(message.content == "$time")
     {
-        var current_time = calcTime(config.offset)
+        var current_time = new Date()
         
-        return message.channel.send(`Current time in GMT${_sign()}${config.offset.hour}:${config.offset.minutes} is ${current_time.getUTCHours()}:${current_time.getUTCMinutes()}`)
+        return message.channel.send(`Current time in GMT${_sign()}${config.offset.hour}:${config.offset.minutes} is ${current_time.getHours()}:${current_time.getMinutes()}`)
     }
 })
 
