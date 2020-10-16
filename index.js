@@ -69,6 +69,7 @@ function time_channel_check(guildid, channelid, json, wait_time){ // string, str
     }
 
     if(channel.name != channelname){
+        console.log(channel.name)
         channel.setName(channelname).then(()=>{
             console.log("done")
         }).catch(err => {
