@@ -47,16 +47,16 @@ function time_channel_check(guildid, channelid, json, wait_time){ // string, str
     var current_time = calcTime().getTime()
 
     var sunrise_time = calcTime()
-    sunrise_time.setHours(parseInt(json[0].time.hour), parseInt(json[0].time.minute))
+    sunrise_time.setUTCHours(parseInt(json[0].time.hour), parseInt(json[0].time.minute))
 
     var morning_time = calcTime()
-    morning_time.setHours(parseInt(json[1].time.hour), parseInt(json[1].time.minute))
+    morning_time.setUTCHours(parseInt(json[1].time.hour), parseInt(json[1].time.minute))
 
     var sunset_time = calcTime()
-    sunset_time.setHours(parseInt(json[2].time.hour), parseInt(json[2].time.minute))
+    sunset_time.setUTCHours(parseInt(json[2].time.hour), parseInt(json[2].time.minute))
     
     var night_time = calcTime()
-    night_time.setHours(parseInt(json[3].time.hour), parseInt(json[3].time.minute))
+    night_time.setUTCHours(parseInt(json[3].time.hour), parseInt(json[3].time.minute))
 
     if(night_time.getTime() - current_time < 0){
         channelname = json[3].name
